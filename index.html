@@ -1,0 +1,2071 @@
+<HTML>
+
+   <head>
+      	<title>MUX_DEMO2</title>
+     	<link rel="stylesheet" href="styles.css">
+   		<link rel="stylesheet" href="flipclock.css">
+      	<script src="jquery.min.js"></script>
+        <script src="select.js"></script>
+  		<script src="flipclock.min.js"></script>
+   		<meta charset="utf-8">
+ 	 	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 		 <title>jQuery UI Autocomplete - Combobox</title>
+  		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  		<link rel="stylesheet" href="/resources/demos/style.css">
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+   </head>
+
+
+  	<style>
+  		h2 {
+    		color: white;
+		}
+    .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -5px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+  padding:-10px -10px;
+    }
+   .ui-widget{
+  width : 60px;
+  
+  }
+  
+  .ui-corner-right{
+  
+  width : 20px;
+  
+  }
+	</style>
+
+
+   <script LANGUAGE="JavaScript">
+
+      
+      
+      //chanel 1    
+      var CH1_LED_ON = 0;
+      var CH1_ADC_Status = 0;
+      
+      var CH2_LED_ON = 0;
+      var CH2_ADC_Status = 0;
+      
+      var CH3_LED_ON = 0;
+      var CH3_ADC_Status = 0;
+      
+      var CH4_LED_ON = 0;
+      var CH4_ADC_Status = 0;
+   
+      var PHP_RELEY_CONTROL_URL = "relay_control.php";
+      
+      
+      //chechbox
+      $(function() {
+      
+          $(".onoffswitch-checkbox").click(function() {
+              if ($(this).prop("checked") == true) {
+      
+                  var indexObj = $(this).index(".onoffswitch-checkbox");
+                  CH1_LED_ON = indexObj + 1;
+      			 
+                  var xhttp = new XMLHttpRequest();             
+              
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=32&led=" + CH1_LED_ON + "&adc=" + CH1_ADC_Status, true);
+                  xhttp.send();
+      
+                  $(".onoffswitch-checkbox").not(":eq(" + indexObj + ")").prop("checked", false);
+      
+              } else {
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=32&led=0&adc=" + CH1_ADC_Status, true);
+                  xhttp.send();
+                  CH1_LED_ON = 0;
+              }
+          });
+      });
+      
+      //checkbox1
+      $(function() {
+      
+          $(".onoffswitch1-checkbox").click(function() {
+              if ($(this).prop("checked") == true) {
+                  var indexObj = $(this).index(".onoffswitch1-checkbox");
+                  CH2_LED_ON = indexObj + 1;
+      
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=33&led=" + CH2_LED_ON + "&adc=" + CH2_ADC_Status, true);
+                  xhttp.send();
+      
+      
+                  $(".onoffswitch1-checkbox").not(":eq(" + indexObj + ")").prop("checked", false);
+              } else {
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=33&led=0&adc=" + CH2_ADC_Status, true);
+                  xhttp.send();
+                  CH2_LED_ON = 0;
+              }
+          });
+      });
+      
+      //checkbox2
+      $(function() {
+      
+          $(".onoffswitch2-checkbox").click(function() {
+              if ($(this).prop("checked") == true) {
+                  var indexObj = $(this).index(".onoffswitch2-checkbox");
+                  CH3_LED_ON = indexObj + 1;
+      
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=34&led=" + CH3_LED_ON + "&adc=" + CH3_ADC_Status, true);
+                  xhttp.send();
+                  $(".onoffswitch2-checkbox").not(":eq(" + indexObj + ")").prop("checked", false);
+              } else {
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=34&led=0&adc=" + CH3_ADC_Status, true);
+                  xhttp.send();
+                  CH3_LED_ON = 0;
+              }
+          });
+      });
+      
+      //checkbox3
+      $(function() {
+          $(".onoffswitch3-checkbox").click(function() {
+              if ($(this).prop("checked") == true) {
+                  var indexObj = $(this).index(".onoffswitch3-checkbox");
+                  CH4_LED_ON = indexObj + 1;
+      
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=35&led=" + CH4_LED_ON + "&adc=" + CH4_ADC_Status, true);
+                  xhttp.send();
+                  $(".onoffswitch3-checkbox").not(":eq(" + indexObj + ")").prop("checked", false);
+              } else {
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=35&led=0&adc=" + CH4_ADC_Status, true);
+                  xhttp.send();
+                  CH4_LED_ON = 0;
+              }
+          });
+      });
+      
+      
+      
+      
+      function CH1_RESET(){
+      	$(".onoffswitch-checkbox").attr('checked',false); 
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=32&led=0&adc=" + CH1_ADC_Status, true);
+          xhttp.send();
+          CH1_LED_ON = 0;
+      } 
+      function CH2_RESET(){
+      	$(".onoffswitch1-checkbox").attr('checked',false); 
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=33&led=0&adc=" + CH2_ADC_Status, true);
+          xhttp.send();
+          CH2_LED_ON = 0;
+      }
+      function CH3_RESET(){
+      	$(".onoffswitch2-checkbox").attr('checked',false); 
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=34&led=0&adc=" + CH3_ADC_Status, true);
+          xhttp.send();
+          CH3_LED_ON = 0;
+      } 
+      function CH4_RESET(){
+      	$(".onoffswitch3-checkbox").attr('checked',false); 
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?ch=35&led=0&adc=" + CH4_ADC_Status, true);
+          xhttp.send();
+          CH4_LED_ON = 0;
+      } 
+      
+      
+      function CH1_ADC_ON() {
+          var xhttp = new XMLHttpRequest();
+          CH1_ADC_Status = 1;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH1_LED_ON + "&ch=32&adc=" + CH1_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      function CH1_ADC_OFF() {
+          var xhttp = new XMLHttpRequest();
+          CH1_ADC_Status = 0;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH1_LED_ON + "&ch=32&adc=" + CH1_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      //chanel 2
+      function CH2_ADC_ON() {
+          var xhttp = new XMLHttpRequest();
+          CH2_ADC_Status = 1;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH2_LED_ON + "&ch=33&adc=" + CH2_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      function CH2_ADC_OFF() {
+          var xhttp = new XMLHttpRequest();
+          CH2_ADC_Status = 0;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH2_LED_ON + "&ch=33&adc=" + CH2_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      function CH3_ADC_ON() {
+          var xhttp = new XMLHttpRequest();
+          CH3_ADC_Status = 3;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH3_LED_ON + "&ch=34&adc=" + CH3_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      function CH3_ADC_OFF() {
+          var xhttp = new XMLHttpRequest();
+          CH3_ADC_Status = 0;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH3_LED_ON + "&ch=34&adc=" + CH3_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      function CH4_ADC_ON() {
+          var xhttp = new XMLHttpRequest();
+          CH4_ADC_Status = 1;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH4_LED_ON + "&ch=35&adc=" + CH4_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      function CH4_ADC_OFF() {
+          var xhttp = new XMLHttpRequest();
+          CH4_ADC_Status = 0;
+          xhttp.open("GET", PHP_RELEY_CONTROL_URL + "?led=" + CH4_LED_ON + "&ch=35&adc=" + CH4_ADC_Status, true);
+          xhttp.send();
+      }
+      
+      
+      
+      
+      //------------------------------------------------------SQL----------------------------------------------------------------------------------------------------
+      
+      var sql_ch = 0;
+      
+      function CH1_SQL() {
+          sql_ch = 0;
+          SQLR();
+      }
+      
+      function CH2_SQL() {
+          sql_ch = 1;
+          SQLR();
+      }
+      
+      function CH3_SQL() {
+          sql_ch = 2;
+          SQLR();
+      }
+      
+      function CH4_SQL() {
+          sql_ch = 3;
+          SQLR();
+      }
+      
+      function ALL_SQL() {
+          sql_ch = 0;
+          SQLR();
+          sql_ch = 1;
+          SQLR();
+          sql_ch = 2;
+          SQLR();
+          sql_ch = 3;
+          SQLR();
+      }
+      
+      
+      
+      //Read all CH
+      function SQLR() {
+      
+          for (i = 8 * sql_ch + 1; i <= 8 * sql_ch + 8; i++) {
+              var xhttp = new XMLHttpRequest();
+      
+              xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      $("#inputtext" + i).val(this.responseText);
+                 
+                  }
+              };
+      
+              xhttp.open("GET", "mydb.php?des=" + i + "&read=1", false);
+              xhttp.send();
+          }
+      
+      }
+      
+      
+      //Update SQL
+      function SQLW() {
+      
+          var xhttp = new XMLHttpRequest();
+          var get_url = "";
+      
+          for (i = 1; i < 33; i++) {
+      
+              //if ($("#inputtext" + i).val() === "") {
+             //     get_url = get_url + "K" + i;
+              //} else {
+                  get_url = get_url + $("#inputtext" + i).val();
+              //}
+      
+              if (i < 32) get_url = get_url + ",";
+          }
+      
+         //alert(get_url);
+      
+          xhttp.onreadystatechange = function() {};
+          xhttp.open("GET", "mydb.php?des=1&relay=" + get_url, true);
+          xhttp.send();
+      
+      }
+   
+   
+   
+   
+   
+         //Read CH1 ADC
+      function ADC1() {
+      
+              var xhttp = new XMLHttpRequest();
+      
+              xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      $("#adc_show1").val(this.responseText);
+                  }
+              };
+      
+              xhttp.open("GET", "adc.php?ch=1", false);
+              xhttp.send();
+      
+      }
+   
+         //Read CH2 ADC
+      function ADC2() {
+      
+              var xhttp = new XMLHttpRequest();
+      
+              xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      $("#adc_show2").val(this.responseText);
+                  }
+              };
+      
+              xhttp.open("GET", "adc.php?ch=2", false);
+              xhttp.send();
+      
+      }
+    //Read CH3 ADC
+      function ADC3() {
+      
+              var xhttp = new XMLHttpRequest();
+      
+              xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      $("#adc_show3").val(this.responseText);
+                  }
+              };
+      
+              xhttp.open("GET", "adc.php?ch=3", false);
+              xhttp.send();
+      
+      }
+    //Read CH4 ADC
+      function ADC4() {
+      
+              var xhttp = new XMLHttpRequest();
+      
+              xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      $("#adc_show4").val(this.responseText);
+                  }
+              };
+      
+              xhttp.open("GET", "adc.php?ch=4", false);
+              xhttp.send();
+      
+      }
+   </script>
+
+
+
+
+   <body>
+   
+
+   
+      
+   
+      <center>
+      <h2><div id="Date"></div></h2>
+         <button id="all_sql_read" onclick="ALL_SQL();" >ALL PIN READ </button>
+         <button id="all_sql_write" onclick="SQLW();">ALL PIN UPDATE </button>
+         <button onclick="CH1_RESET();CH2_RESET();CH3_RESET();CH4_RESET();">RESET</button> 
+         <br>
+      
+
+      
+         <TABLE border=5  width="40%"  >
+            <TR>
+               <!-- Row 1 -->
+               <TD align=center colspan=8 BGcolor=#FF3366>
+                  <font size=5 > CHANNEL 1 </font>  
+                  <br> 
+                  <button onclick="CH1_ADC_ON();ADC1();"> ADC ON </button> <button onclick="CH1_ADC_OFF()"> ADC OFF </button><br>
+                  <button   class=onoffswitch  align=left    onclick="CH1_SQL()">PIN READ</button> &nbsp;&nbsp;&nbsp;
+                  <button onclick="SQLW();"> PIN UPDATE </button> &nbsp;&nbsp;
+                  <button onclick="CH1_RESET()">RESET</button>  
+                  <table width=17% cellpadding="4" cellspacing="0" style="border:double 5px #FFFF99;"> 
+                     <tr> <br> 
+                      <td style="border:double 5px #FFFF99;"> 
+                     <input type=text size= 5  style="width:80px;height:35px;text-align:center;font-size:25"  id="adc_show1"> V </td> 
+                     </tr> 
+                  </table>
+            
+               </TD>
+            </TR>
+            <TR>
+            
+               <!-- Row 2 -->
+               <TD align=center BGcolor =#FFFFFF style="cursor:pointer" >
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch1"  class="onoffswitch-checkbox" id="myonoffswitch1"  />
+                     <label class="onoffswitch-label" for="myonoffswitch1">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-1 </div>
+                 
+                        <div class="ui-widget" id="inputtext1" name="inputtext1">
+ 
+ 							<select id="combobox" width=10% name=inputtext1 id=inputtext1>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF  >
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch2"   class="onoffswitch-checkbox" id="myonoffswitch2">
+                     <label class="onoffswitch-label" for="myonoffswitch2">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-2 </div>
+                   <div class="ui-widget" id="inputtext2" >
+ 
+ 							<select id="combobox1" width=10% name="inputtext2">
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch3" class="onoffswitch-checkbox" id="myonoffswitch3" >
+                     <label class="onoffswitch-label" for="myonoffswitch3">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-3 </div>
+                          <div class="ui-widget" id="inputtext3" >
+ 
+ 							<select id="combobox3" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch4" class="onoffswitch-checkbox" id="myonoffswitch4" >
+                     <label class="onoffswitch-label" for="myonoffswitch4">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-4 </div>
+                 <div class="ui-widget" id="inputtext4" name="inputtext4">
+ 
+ 							<select id="combobox4" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch5" class="onoffswitch-checkbox" id="myonoffswitch5" >
+                     <label class="onoffswitch-label" for="myonoffswitch5">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-5 </div>
+                 <div class="ui-widget" id="inputtext5" name="inputtext5">
+ 
+ 							<select id="combobox5" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch6" class="onoffswitch-checkbox" id="myonoffswitch6" >
+                     <label class="onoffswitch-label" for="myonoffswitch6">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-6 </div>
+                  <div class="ui-widget" id="inputtext6" name="inputtext6">
+ 
+ 							<select id="combobox6" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch7" class="onoffswitch-checkbox" id="myonoffswitch7" >
+                     <label class="onoffswitch-label" for="myonoffswitch7">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH1-7  </div>
+                   <div class="ui-widget" id="inputtext7" name="inputtext7">
+ 
+ 							<select id="combobox7" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer"  BGcolor =#FFFFFF>
+                  <div class="onoffswitch">
+                     <input type="checkbox" name="onoffswitch8" class="onoffswitch-checkbox" id="myonoffswitch8" >
+                     <label class="onoffswitch-label" for="myonoffswitch8">
+                     <span class="onoffswitch-inner"></span>
+                     <span class="onoffswitch-switch"></span>
+                     </label>
+                  </div>
+               <div>  CH1-8 </div>
+                <div  class="ui-widget" id="inputtext8" name="inputtext8">
+ 
+ 							<select id="combobox8" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+            </TR>
+            <TR>
+               <!-- Row 3 -->
+               <TD align=center colspan=8 BGcolor=#FF3366>
+                  <font size=5 > CHANNEL 2 </font>  
+                  <br> 
+                  <button onclick="CH2_ADC_ON();ADC2();"> ADC ON </button> <button onclick="CH2_ADC_OFF()"> ADC OFF </button><br>
+                  <button   class=onoffswitch1  align=left    onclick="CH2_SQL()">PIN READ</button> &nbsp;&nbsp;&nbsp;
+                  <button onclick="SQLW();"> PIN UPDATE </button> &nbsp;&nbsp;
+                  <button onclick="CH2_RESET()">RESET</button>
+                  <table width=17% cellpadding="4" cellspacing="0" style="border:double 5px #FFFF99;"> 
+                     <tr> <br> 
+                      <td style="border:double 5px #FFFF99;"> 
+                     <input type=text size= 5  style="width:80px;height:35px;text-align:center;font-size:25"  id="adc_show2"> V </td>
+                     </tr> 
+                  </table>
+            
+               </TD>
+            </TR>
+            <TR>
+               <!-- Row 4 -->
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch9" class="onoffswitch1-checkbox" id="myonoffswitch9" >
+                     <label class="onoffswitch1-label" for="myonoffswitch9">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH2-1 </div>
+                      <div  class="ui-widget" id="inputtext9" name="inputtext9">
+ 
+ 							<select id="combobox9" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch10" class="onoffswitch1-checkbox" id="myonoffswitch10" >
+                     <label class="onoffswitch1-label" for="myonoffswitch10">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH2-2 </div>
+                     <div  class="ui-widget" id="inputtext10" name="inputtext10">
+ 
+ 							<select id="combobox10" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch11" class="onoffswitch1-checkbox" id="myonoffswitch11"  >
+                     <label class="onoffswitch1-label" for="myonoffswitch11">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH2-3 </div>    
+   					 <div class="ui-widget" id="inputtext11" >
+ 
+ 							<select id="combobox11" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+                
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch12" class="onoffswitch1-checkbox" id="myonoffswitch12" >
+                     <label class="onoffswitch1-label" for="myonoffswitch12">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH2-4 </div>
+               <div class="ui-widget" id="inputtext12" >
+ 
+ 							<select id="combobox12" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+             </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch13" class="onoffswitch1-checkbox" id="myonoffswitch13"  >
+                     <label class="onoffswitch1-label" for="myonoffswitch13">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH2-5 </div>
+          			<div class="ui-widget" id="inputtext13" >
+ 
+ 							<select id="combobox13" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch14" class="onoffswitch1-checkbox" id="myonoffswitch14"  >
+                     <label class="onoffswitch1-label" for="myonoffswitch14">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH2-6 </div>
+            <div class="ui-widget" id="inputtext14" >
+ 
+ 							<select id="combobox14" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch15" class="onoffswitch1-checkbox" id="myonoffswitch15"  >
+                     <label class="onoffswitch1-label" for="myonoffswitch15">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH2-7 </div>
+        <div class="ui-widget" id="inputtext15" >
+ 
+ 							<select id="combobox15" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch1">
+                     <input type="checkbox" name="onoffswitch16" class="onoffswitch1-checkbox" id="myonoffswitch16"  >
+                     <label class="onoffswitch1-label" for="myonoffswitch16">
+                     <span class="onoffswitch1-inner"></span>
+                     <span class="onoffswitch1-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH2-8 </div>
+                 <div class="ui-widget" id="inputtext16" >
+ 
+ 							<select id="combobox16" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+            </TR>
+            <TR>
+               <!-- Row 5 -->
+                <TD align=center colspan=8 BGcolor=#FF3366>
+                  <font size=5 > CHANNEL 3 </font>  
+                  <br> 
+                  <button onclick="CH3_ADC_ON();ADC3();"> ADC ON </button> <button onclick="CH3_ADC_OFF()"> ADC OFF </button><br>
+                  <button   class=onoffswitch2  align=left    onclick="CH3_SQL()">PIN READ</button> &nbsp;&nbsp;&nbsp;
+                  <button onclick="SQLW();"> PIN UPDATE </button> &nbsp;&nbsp;
+                  <button onclick="CH3_RESET()">RESET</button>
+                  <table width=17% cellpadding="4" cellspacing="0" style="border:double 5px #FFFF99;"> 
+                     <tr> <br> 
+                      <td style="border:double 5px #FFFF99;"> 
+                     <input type=text size= 5  style="width:80px;height:35px;text-align:center;font-size:25"  id="adc_show3"> V </td>
+                     </tr> 
+                  </table>
+            
+               </TD>
+            </TR>
+            <TR>
+               <!-- Row 6 -->
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch17" class="onoffswitch2-checkbox" id="myonoffswitch17"  >
+                     <label class="onoffswitch2-label" for="myonoffswitch17">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-1 </div>
+                         <div class="ui-widget" id="inputtext17" >
+ 
+ 							<select id="combobox17" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch18" class="onoffswitch2-checkbox" id="myonoffswitch18" >
+                     <label class="onoffswitch2-label" for="myonoffswitch18">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-2 </div>
+                          <div class="ui-widget" id="inputtext18" >
+ 
+ 							<select id="combobox18" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch19" class="onoffswitch2-checkbox" id="myonoffswitch19" >
+                     <label class="onoffswitch2-label" for="myonoffswitch19">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-3 </div>
+                         <div class="ui-widget" id="inputtext19" >
+ 
+ 							<select id="combobox19" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch20" class="onoffswitch2-checkbox" id="myonoffswitch20" >
+                     <label class="onoffswitch2-label" for="myonoffswitch20">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-4</div>
+                         <div class="ui-widget" id="inputtext20" >
+ 
+ 							<select id="combobox20" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch21" class="onoffswitch2-checkbox" id="myonoffswitch21">
+                     <label class="onoffswitch2-label" for="myonoffswitch21">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-5 </div>
+                         <div class="ui-widget" id="inputtext21" >
+ 
+ 							<select id="combobox21" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch22" class="onoffswitch2-checkbox" id="myonoffswitch22" >
+                     <label class="onoffswitch2-label" for="myonoffswitch22">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-6</div>
+                          <div class="ui-widget" id="inputtext22" >
+ 
+ 							<select id="combobox22" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch23" class="onoffswitch2-checkbox" id="myonoffswitch23"  >
+                     <label class="onoffswitch2-label" for="myonoffswitch23">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-7 </div>
+                          <div class="ui-widget" id="inputtext23" >
+ 
+ 							<select id="combobox23" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch2">
+                     <input type="checkbox" name="onoffswitch24" class="onoffswitch2-checkbox" id="myonoffswitch24">
+                     <label class="onoffswitch2-label" for="myonoffswitch24">
+                     <span class="onoffswitch2-inner"></span>
+                     <span class="onoffswitch2-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH3-8 </div>
+                         <div class="ui-widget" id="inputtext24" >
+ 
+ 							<select id="combobox24" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+            </TR>
+            <TR>
+               <!-- Row 7 -->
+               <TD align=center colspan=8 BGcolor=#FF3366>
+                  <font size=5 > CHANNEL 4 </font>  
+                  <br> 
+                  <button onclick="CH4_ADC_ON();ADC4();"> ADC ON </button> <button onclick="CH4_ADC_OFF()"> ADC OFF </button><br>
+                  <button   class=onoffswitch3  align=left    onclick="CH4_SQL()">PIN READ</button> &nbsp;&nbsp;&nbsp;
+                  <button onclick="SQLW();"> PIN UPDATE </button> &nbsp;&nbsp;
+                  <button onclick="CH4_RESET()">RESET</button>
+                  <table width=17% cellpadding="4" cellspacing="0" style="border:double 5px #FFFF99;"> 
+                     <tr> <br> 
+                      <td style="border:double 5px #FFFF99;"> 
+                     <input type=text size= 5  style="width:80px;height:35px;text-align:center;font-size:25"  id="adc_show4"> V </td>
+                     </tr> 
+                  </table>
+            
+               </TD>
+            </TR>
+            <TR>
+               <!-- Row 8 -->
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch25" class="onoffswitch3-checkbox" id="myonoffswitch25" >
+                     <label class="onoffswitch3-label" for="myonoffswitch25">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH4-1 </div>
+              
+                 <div class="ui-widget" id="inputtext25" >
+ 
+ 							<select id="combobox25" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch26" class="onoffswitch3-checkbox" id="myonoffswitch26" >
+                     <label class="onoffswitch3-label" for="myonoffswitch26">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH4-2 </div>
+                  <div class="ui-widget" id="inputtext26" >
+ 
+ 							<select id="combobox26" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch27" class="onoffswitch3-checkbox" id="myonoffswitch27">
+                     <label class="onoffswitch3-label" for="myonoffswitch27">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH4-3 </div>
+                 <div class="ui-widget" id="inputtext27" >
+ 
+ 							<select id="combobox27" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch28" class="onoffswitch3-checkbox" id="myonoffswitch28" >
+                     <label class="onoffswitch3-label" for="myonoffswitch28">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div>CH4-4 </div>
+                  <div class="ui-widget" id="inputtext28" >
+ 
+ 							<select id="combobox28" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch29" class="onoffswitch3-checkbox" id="myonoffswitch29" >
+                     <label class="onoffswitch3-label" for="myonoffswitch29">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH4-5 </div>
+                 <div class="ui-widget" id="inputtext29" >
+ 
+ 							<select id="combobox29" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch30" class="onoffswitch3-checkbox" id="myonoffswitch30"  >
+                     <label class="onoffswitch3-label" for="myonoffswitch30">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH4-6 </div>
+                  <div class="ui-widget" id="inputtext30" >
+ 
+ 							<select id="combobox30" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch31" class="onoffswitch3-checkbox" id="myonoffswitch31"  >
+                     <label class="onoffswitch3-label" for="myonoffswitch31">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH4-7 </div>
+                  <div class="ui-widget" id="inputtext31" >
+ 
+ 							<select id="combobox31" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+               <TD align=center  style="cursor:pointer" BGcolor =#FFFFFF>
+                  <div class="onoffswitch3">
+                     <input type="checkbox" name="onoffswitch32" class="onoffswitch3-checkbox" id="myonoffswitch32">
+                     <label class="onoffswitch3-label" for="myonoffswitch32">
+                     <span class="onoffswitch3-inner"></span>
+                     <span class="onoffswitch3-switch"></span>
+                     </label>
+                  </div>
+                  <div> CH4-8 </div>
+                    <div class="ui-widget" id=inputtext32>
+ 
+ 							<select id="combobox32" width=10%>
+   							<option value="">Select one...</option>
+   							<option value="BATT">BATT</option>
+   							<option value="BIAS">BIAS</option>
+   							<option value="BST">BST</option>
+    						<option value="COMP">COMP</option>
+    						<option value="CSN">CSN</option>
+    						<option value="CSP">CSP</option>
+    						<option value="DH">DH</option>
+   							<option value="DL">DL</option>
+   							<option value="EN">EN</option>
+    						<option value="FAULT">FAULT</option>
+    						<option value="FB">FB</option>
+    						<option value="IN">IN</option>
+    						<option value="IREF">IREF</option>
+    						<option value="LX">LX</option>
+    						<option value="OUT">OUT</option>
+    						<option value="OSC">OSC</option>
+   							<option value="PGOOD">PGOOD</option>
+    						<option value="PV">PV</option>
+   						    <option value="REFF">REFF</option>
+    						<option value="RESET">RESET</option>
+    						<option value="RSN">RSN</option>
+    						<option value="RSP">RSP</option>
+                            <option value="RT">RT</option>
+                            <option value="SCL">SCL</option>
+    						<option value="SDA">SDA</option>
+   						    <option value="SET">SET</option>
+    						<option value="SPS">SPS</option>
+    						<option value="SUP">SUP</option>
+    						<option value="SUPSW">SUPSW</option>
+                            <option value="SYNC">SYNC</option>
+                            <option value="VCC">VCC</option>
+    						
+ 			 </select>
+</div>
+               </TD>
+            </TR>
+         </TABLE>
+      </center>
+
+   <div class="clock" ></div>
+
+   <script type="text/javascript" >
+	var d = new Date();
+	var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+	document.getElementById("Date").innerHTML = days[d.getDay()] + " - " + d.getDate() + " - " + monthNames[d.getMonth()] + " - " + d.getFullYear();
+
+		var clock;
+		
+				$(document).ready(function() {
+				clock = $('.clock').FlipClock({
+					clockFace: 'TwentyFourHourClock'
+				});
+			});
+
+   </script>
+      </body>
+ 
+
+
+</HTML>
